@@ -1,0 +1,307 @@
+{
+  "hosts": [
+    {
+      "hostName": "腾讯云",
+      "serverIP": "175.178.112.105",
+      "sshUser": "root",
+      "services": [
+        {
+          "serviceName": "Astrbot WebUI",
+          "remotePort": 6185,
+          "localPort": 6185,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": "UserPass",
+            "username": "TimeXingjian",
+            "password": "lsb//332211",
+            "token": null
+          }
+        },
+        {
+          "serviceName": "NapCat WebUI",
+          "remotePort": 6099,
+          "localPort": 6099,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}/webui",
+          "loginInfo": {
+            "type": "Token",
+            "username": null,
+            "password": null,
+            "token": "lsb//332211"
+          }
+        },
+        {
+          "serviceName": "NewAPI",
+          "remotePort": 3000,
+          "localPort": 3000,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": "UserPass",
+            "username": "TimeXingjian",
+            "password": "lsb//332211",
+            "token": null
+          }
+        },
+        {
+          "serviceName": "后台管理面板 (无自动跳转)",
+          "remotePort": 8888,
+          "localPort": 8888,
+          "autoOpenUrl": false,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": null
+        }
+      ]
+    },
+    {
+      "hostName": "腾讯云4M",
+      "serverIP": "114.132.75.87",
+      "sshUser": "root",
+      "services": [
+        {
+          "serviceName": "WG后台管理面板",
+          "remotePort": 51821,
+          "localPort": 51821,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": null,
+            "username": null,
+            "password": "lsb//332211",
+            "token": null
+          }
+        },
+        {
+          "serviceName": "AG DNS后台管理面板",
+          "remotePort": 3000,
+          "localPort": 3000,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "password": "lsb//332211",
+            "token": "null"
+          }
+        }
+      ]
+    },
+    {
+      "hostName": "家里云",
+      "serverIP": "192.168.0.147",
+      "sshUser": "root",
+      "services": [
+        {
+          "serviceName": "OpenCut",
+          "remotePort": 3100,
+          "localPort": 3100,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": null
+        },
+        {
+          "serviceName": "AG DNS后台管理面板",
+          "remotePort": 3000,
+          "localPort": 3000,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": null,
+            "username": null,
+            "password": "lsb//332211",
+            "token": null
+          }
+        }
+      ]
+    },
+    {
+      "hostName": "家里云-WG",
+      "serverIP": "10.8.0.4",
+      "sshUser": "root",
+      "services": [
+        {
+          "serviceName": "NapCat",
+          "remotePort": 6099,
+          "localPort": 6099,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}/webui",
+          "loginInfo": {
+            "token": "lsb//332211"
+          }
+        },
+        {
+          "serviceName": "Astrbot",
+          "remotePort": 6185,
+          "localPort": 6185,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "username": "TimeXingjian",
+            "password": "lsb//332211"
+          }
+        }
+      ]
+    },
+    {
+      "hostName": "华为云",
+      "serverIP": "139.9.0.88",
+      "sshUser": "root",
+      "services": [
+        {
+          "serviceName": "ST",
+          "remotePort": 8000,
+          "localPort": 8000,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": "UserPass",
+            "username": "TimeXingjian",
+            "password": "lsb//332211",
+            "token": null
+          }
+        },
+        {
+          "serviceName": "clash",
+          "remotePort": 9090,
+          "localPort": 9090,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}/ui",
+          "loginInfo": null
+        },
+        {
+          "serviceName": "nginx",
+          "remotePort": 80,
+          "localPort": 8080,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://sillytavern.pheobe.lan:{0}",
+          "loginInfo": null
+        },
+        {
+          "serviceName": "NewAPI",
+          "remotePort": 3000,
+          "localPort": 3000,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": "UserPass",
+            "username": "TimeXingjian",
+            "password": "lsb//332211",
+            "token": null
+          }
+        }
+      ]
+    },
+    {
+      "hostName": "华为云托管",
+      "serverIP": "113.44.65.216",
+      "sshUser": "root",
+      "services": [
+        {
+          "serviceName": "NapCat WebUI",
+          "remotePort": 6099,
+          "localPort": 6099,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}/webui",
+          "loginInfo": {
+            "type": "Token",
+            "username": null,
+            "password": null,
+            "token": "lsb//332211"
+          }
+        },
+        {
+          "serviceName": "Astrbot WebUI",
+          "remotePort": 6185,
+          "localPort": 6185,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": "UserPass",
+            "username": "xlin",
+            "password": "233196097jay",
+            "token": null
+          }
+        },
+        {
+          "serviceName": "Wireguard后台管理面板",
+          "remotePort": 51821,
+          "localPort": 51821,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {}
+        }
+      ]
+    },
+    {
+      "hostName": "京东云",
+      "serverIP": "117.72.219.15",
+      "sshUser": "root",
+      "services": [
+        {
+          "serviceName": "WG后台管理面板",
+          "remotePort": 51821,
+          "localPort": 51821,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": null,
+            "username": null,
+            "password": "lsb//332211",
+            "token": null
+          }
+        },
+        {
+          "serviceName": "NewAPI",
+          "remotePort": 3000,
+          "localPort": 3000,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": null,
+            "username": null,
+            "password": "lsb//332211",
+            "token": null
+          }
+        },
+        {
+          "serviceName": "Gemini balance",
+          "remotePort": 8001,
+          "localPort": 8001,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": null,
+            "username": null,
+            "password": "lsb//332211",
+            "token": null
+          }
+        },
+        {
+          "serviceName": "clash",
+          "remotePort": 9090,
+          "localPort": 9090,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}/ui",
+          "loginInfo": {
+            "type": null,
+            "username": null,
+            "password": "lsb//332211",
+            "token": null
+          }
+        },
+        {
+          "serviceName": "ST",
+          "remotePort": 8000,
+          "localPort": 8000,
+          "autoOpenUrl": true,
+          "urlTemplate": "http://localhost:{0}",
+          "loginInfo": {
+            "type": null,
+            "username": null,
+            "password": "lsb//332211",
+            "token": null
+          }
+        }
+      ]
+    }
+  ]
+}

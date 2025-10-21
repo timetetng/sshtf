@@ -1,0 +1,14 @@
+[project]
+name = "sshtf"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiofiles>=25.1.0",
+    "colorama>=0.4.6",
+    "fastapi[all]>=0.119.1",
+    "psutil>=7.1.1",
+    "pydantic>=2.12.3",
+    "uvicorn>=0.38.0",
+]

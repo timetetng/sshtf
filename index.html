@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>端口转发配置管理器</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+
+    <div class="naokuo-toggle-container">
+        <div class="components" id="btn-toggle-theme-new">
+            <div class="main-button">
+                <div class="moon"></div>
+                <div class="moon"></div>
+                <div class="moon"></div>
+            </div>
+            <div class="daytime-backgrond"></div>
+            <div class="daytime-backgrond"></div>
+            <div class="daytime-backgrond"></div>
+            <div class="cloud">
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+            </div>
+            <div class="cloud-light">
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+                <div class="cloud-son"></div>
+            </div>
+            <div class="stars">
+                <div class="star big">
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                </div>
+                <div class="star big">
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                </div>
+                <div class="star medium">
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                </div>
+                <div class="star medium">
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                </div>
+                <div class="star small">
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                </div>
+                <div class="star small">
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                    <div class="star-son"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="header-controls">
+            <h1>SSH转发配置管理</h1>
+            
+            </div>
+
+        <div class="form-section" id="add-host-section">
+            <div class="form-section-header">
+                <h2>添加新主机</h2>
+                <button id="btn-toggle-add-host" class="btn btn-secondary">隐藏</button>
+            </div>
+            
+            <form id="form-add-host">
+                <div>
+                    <label for="hostName">主机名 (Host Name)</label>
+                    <input type="text" id="hostName" required>
+                </div>
+                <div>
+                    <label for="serverIP">服务器 IP (Server IP)</label>
+                    <input type="text" id="serverIP" required>
+                </div>
+                <div>
+                    <label for="sshUser">SSH 用户 (SSH User)</label>
+                    <input type="text" id="sshUser" required>
+                </div>
+                <div class="full-width" style="flex-direction: row; align-items: flex-end;">
+                    <button type="submit" class="btn btn-primary">添加主机</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="loading">正在加载配置...</div>
+        
+        <div id="config-content">
+        </div>
+
+    </div>
+
+    <template id="template-service-form">
+        <div class="form-section service-form-container">
+            <h4><span class="form-title"></span> (主机: <span class="host-name-placeholder"></span>)</h4>
+            
+            <form class="service-form" data-mode="" data-host-name="" data-original-service-name="">
+                <div>
+                    <label>服务名 (Service Name)</label>
+                    <input type="text" class="serviceName" required>
+                </div>
+                <div>
+                    <label>远程端口 (Remote Port)</label>
+                    <input type="number" class="remotePort" required>
+                </div>
+                <div>
+                    <label>本地端口 (Local Port)</label>
+                    <input type="number" class="localPort" required>
+                </div>
+                <div>
+                    <label>URL 模板 (Url Template)</label>
+                    <input type="text" class="urlTemplate" value="http://localhost:{0}">
+                </div>
+                <div style="align-items: center; flex-direction: row; gap: 10px;">
+                    <input type="checkbox" class="autoOpenUrl" checked style="width: auto; height: auto; margin: 0;">
+                    <label style="margin-bottom: 0;">自动打开URL?</label>
+                </div>
+                
+                <div class="full-width">
+                    <label>登录信息 (Login Info)</label>
+                    <div class="login-info-builder">
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-add-kv-pair">添加登录信息字段</button>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success btn-save-service">保存</button>
+                    <button type="button" class="btn btn-secondary btn-cancel-service">取消</button>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <template id="template-kv-row">
+        <div class="kv-row">
+            <select class="kv-key-select">
+                <option value="username">用户名</option>
+                <option value="password">密码</option>
+                <option value="token">Token</option>
+                <option value="custom">-- 自定义 --</option>
+            </select>
+            <input type="text" class="kv-key-custom" style="display:none;" placeholder="自定义键">
+            <input type="text" class="kv-value" placeholder="值">
+            <button type="button" class="btn-remove-kv-pair">X</button>
+        </div>
+    </template>
+
+    <script src="/app.js"></script>
+</body>
+</html>
