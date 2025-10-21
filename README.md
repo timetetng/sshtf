@@ -2,7 +2,7 @@
 
 `sshtf` 是一个用于管理和启动多主机、多服务 SSH 隧道转发的工具。它将远程服务器上的端口通过 SSH 隧道安全地转发到您的本地计算机，方便您访问远程服务。本项目包含一个 Web UI 用于配置管理，以及命令行脚本用于快速启动隧道。
 
-sshtf is an SSH tunnel forwarding management tool designed to help users easily manage and launch service port forwarding to multiple remote hosts. It provides a web-based user interface (Web UI) for conveniently adding, modifying, deleting, and sorting host and service configurations, saving them in real-time to a config.json file. Additionally, it includes Python and PowerShell command-line scripts that allow users to quickly select and launch preset SSH tunnels through an interactive menu, securely mapping remote service ports to the local machine, thus simplifying the process of accessing remote services. The tool supports features like automatic port detection, background execution, connection keep-alive, and automatic URL opening.
+`sshtf` is an SSH tunnel forwarding management tool designed to help users easily manage and launch service port forwarding to multiple remote hosts. It provides a web-based user interface (Web UI) for conveniently adding, modifying, deleting, and sorting host and service configurations, saving them in real-time to a config.json file. Additionally, it includes Python and PowerShell command-line scripts that allow users to quickly select and launch preset SSH tunnels through an interactive menu, securely mapping remote service ports to the local machine, thus simplifying the process of accessing remote services. The tool supports features like automatic port detection, background execution, connection keep-alive, and automatic URL opening.
 
 ## ✨ 功能特性
 
