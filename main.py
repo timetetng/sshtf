@@ -2,15 +2,15 @@ import json
 import os
 import asyncio
 import aiofiles
-import argparse  # 【新增】导入
-import pathlib   # 【新增】导入
+import argparse
+import pathlib 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from pydantic import BaseModel
 from typing import List, Optional, Union, Any, Dict
-
+SCRIPT_DIR = pathlib.Path(__file__).parent.resolve()
 # --- 配置 ---
-CONFIG_PATH = "config.json"
+CONFIG_PATH = SCRIPT_DIR / "config.json"
 file_lock = asyncio.Lock()
 
 # --- Pydantic 模型 ---
@@ -256,39 +256,41 @@ async def api_update_service(host_name: str, original_service_name: str, updated
 
 
 # --- 静态文件服务 (前端 UI) ---
-
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
+@app.get("/index.html", response_class=HTMLResponse, include_in_schema=False)
 async def get_index():
     """提供 index.html 前端页面"""
-    if not os.path.exists("index.html"):
-        return HTMLResponse(content="<h1>错误：未找到 index.html</h1>", status_code=500)
-    async with aiofiles.open("index.html", 'r', encoding='utf-8') as f:
+    file_path = SCRIPT_DIR / "index.html" # 【修改】
+    if not file_path.exists(): # 【修改】
+        return HTMLResponse(content=f"<h1>错误：未找到 {file_path.name}</h1>", status_code=500)
+    async with aiofiles.open(file_path, 'r', encoding='utf-8') as f: # 【修改】
         return HTMLResponse(content=await f.read())
 
 @app.get("/app.js", include_in_schema=False)
 async def get_js():
     """提供 app.js 前端逻辑"""
-    if not os.path.exists("app.js"):
-        return JSONResponse(content={"error": "未找到 app.js"}, status_code=500)
-    async with aiofiles.open("app.js", 'r', encoding='utf-8') as f:
+    file_path = SCRIPT_DIR / "app.js" # 【修改】
+    if not file_path.exists(): # 【修改】
+        return JSONResponse(content={"error": f"未找到 {file_path.name}"}, status_code=500)
+    async with aiofiles.open(file_path, 'r', encoding='utf-8') as f: # 【修改】
         content = await f.read()
         return HTMLResponse(content=content, media_type="application/javascript")
 
 
 @app.get("/style.css", include_in_schema=False)
-async def get_css():
+async def get_style_css(): # 【修改】函数名
     """提供独立的 style.css 文件"""
-    css_path = "style.css"
-    if not os.path.exists(css_path):
+    css_path = SCRIPT_DIR / "style.css" # 【修改】
+    if not css_path.exists(): # 【修改】
         # 提供一个兜底，以防文件丢失
         return HTMLResponse(content="/* 错误: 未找到 style.css */", media_type="text/css", status_code=404)
     return FileResponse(css_path)
 
 @app.get("/button.css", include_in_schema=False)
-async def get_css():
+async def get_button_css(): # 【修改】函数名
     """提供独立的 button.css 文件"""
-    css_path = "button.css"
-    if not os.path.exists(css_path):
+    css_path = SCRIPT_DIR / "button.css" # 【修改】
+    if not css_path.exists(): # 【修改】
         return HTMLResponse(content="/* 错误: 未找到 button.css */", media_type="text/css", status_code=404)
     return FileResponse(css_path)
 
