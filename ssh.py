@@ -51,7 +51,7 @@ def get_matching_ssh_processes():
     for proc in all_processes:
         try:
             # 确保进程名是 ssh.exe (不区分大小写)
-            if proc.info['name'] and proc.info['name'].lower() == 'ssh.exe':
+            if proc.info['name'] and proc.info['name'].lower() == 'ssh':
                 # 将 cmdline 列表合并为字符串，以便于搜索
                 cmdline_str = " ".join(proc.info['cmdline'] or [])
 
@@ -208,7 +208,7 @@ def start_tunnel(server_ip: str, ssh_user: str, local_port: int, remote_port: in
     
     # 构建 ssh.exe 命令参数列表
     ssh_args = [
-        "ssh.exe",
+        "ssh",
         "-o", "StrictHostKeyChecking=no",
         "-o", "UserKnownHostsFile=NUL",
         "-N",  # 不执行远程命令

@@ -2,8 +2,6 @@ import json
 import os
 import asyncio
 import aiofiles
-import argparse  # 【新增】导入
-import pathlib   # 【新增】导入
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from pydantic import BaseModel
@@ -60,92 +58,6 @@ async def save_config(config: Config):
     async with file_lock:
         async with aiofiles.open(CONFIG_PATH, 'w', encoding='utf-8') as f:
             await f.write(config.model_dump_json(indent=2))
-
-# --- 【新增】SSH Config 导入逻辑 ---
-async def import_ssh_config(ssh_config_path_str: str):
-    """
-    从 .ssh/config 文件解析主机信息并导入到 config.json
-    """
-    ssh_config_path = pathlib.Path(ssh_config_path_str)
-    if not ssh_config_path.is_file():
-        print(f"❌ 错误: 路径 '{ssh_config_path_str}' 不是一个有效文件。")
-        return
-    
-    print(f"ℹ️ 正在从 '{ssh_config_path_str}' 读取 SSH 配置...")
-    
-    parsed_hosts = []
-    current_host_data = {}
-
-    try:
-        # 使用 aiofiles 异步读取
-        async with aiofiles.open(ssh_config_path, 'r', encoding='utf-8') as f:
-            async for line in f:
-                line = line.strip()
-                if not line or line.startswith('#'):
-                    continue # 跳过空行和注释
-
-                parts = line.split(maxsplit=1)
-                if len(parts) < 2:
-                    continue
-                
-                key = parts[0].lower()
-                value = parts[1]
-
-                if key == 'host':
-                    # 遇到新的 Host 块
-                    if current_host_data.get('hostName') and current_host_data.get('serverIP') and current_host_data.get('sshUser'):
-                        # 保存上一个有效的主机
-                        parsed_hosts.append(Host(**current_host_data, services=[]))
-                    
-                    # 开始新的主机 (我们使用 'Host' 字段作为 Pydantic 模型中的 'hostName')
-                    current_host_data = {'hostName': value}
-                    
-                elif key == 'hostname' and current_host_data:
-                    # 'HostName' 字段作为 Pydantic 模型中的 'serverIP' (实际IP/域名)
-                    current_host_data['serverIP'] = value
-                    
-                elif key == 'user' and current_host_data:
-                    current_host_data['sshUser'] = value
-                
-                # (忽略 Port 和其他字段)
-    
-        # 保存文件读取后的最后一个主机
-        if current_host_data.get('hostName') and current_host_data.get('serverIP') and current_host_data.get('sshUser'):
-            parsed_hosts.append(Host(**current_host_data, services=[]))
-            
-    except Exception as e:
-        print(f"❌ 解析 SSH 配置文件时出错: {e}")
-        return
-
-    if not parsed_hosts:
-        print("ℹ️ 未在 SSH 配置文件中找到任何(完整 Host/HostName/User)的主机条目。")
-        return
-
-    print(f"✅ 成功解析到 {len(parsed_hosts)} 个主机。正在合并到 config.json...")
-
-    # --- 合并逻辑 ---
-    try:
-        config = await get_config()
-        existing_hostnames = {h.hostName for h in config.hosts}
-        new_hosts_added = 0
-        
-        for new_host in parsed_hosts:
-            if new_host.hostName not in existing_hostnames:
-                config.hosts.append(new_host)
-                existing_hostnames.add(new_host.hostName)
-                new_hosts_added += 1
-            else:
-                print(f"ℹ️ 跳过已存在的主机: {new_host.hostName}")
-
-        if new_hosts_added > 0:
-            await save_config(config)
-            print(f"✅ 成功导入 {new_hosts_added} 个新主机到 {CONFIG_PATH}。")
-        else:
-            print("ℹ️ 没有新主机被导入（可能都已存在）。")
-            
-    except Exception as e:
-        print(f"❌ 写入 config.json 时出错: {e}")
-
 
 # --- API Endpoints ---
 
@@ -294,34 +206,9 @@ async def get_css():
 
 # --- 用于直接运行 (python main.py) ---
 if __name__ == "__main__":
-    
-    # --- 【修改】添加命令行参数解析 ---
-    parser = argparse.ArgumentParser(
-        description="SSH 隧道转发管理器 Web UI.",
-        formatter_class=argparse.RawTextHelpFormatter
-    )
-    parser.add_argument(
-        "-p", "--path",
-        dest="ssh_config_path",
-        type=str,
-        help="指定 .ssh/config 文件的路径以导入主机。\n如果提供此参数，将只执行导入任务，不会启动 Web 服务器。"
-    )
-    args = parser.parse_args()
-
-    if args.ssh_config_path:
-        # --- 执行导入任务 ---
-        print("--- 正在执行 SSH Config 导入任务 ---")
-        try:
-            # 因为 import_ssh_config 是 async, 我们需要用 asyncio.run()
-            asyncio.run(import_ssh_config(args.ssh_config_path))
-        except Exception as e:
-            print(f"❌ 导入过程中发生意外错误: {e}")
-        print("--- 导入任务完成 ---")
-    else:
-        # --- 正常启动 Web 服务器 ---
-        import uvicorn
-        print("--- 启动端口转发配置管理器 Web UI (V3) ---")
-        print("--- 拖拽排序 + 复制功能 ---")
-        print("--- 服务器运行在 http://127.0.0.1:8000 ---")
-        print("--- 按 CTRL+C 停止 ---")
-        uvicorn.run(app, host="127.0.0.1", port=8000)
+    import uvicorn
+    print("--- 启动端口转发配置管理器 Web UI (V3) ---")
+    print("--- 拖拽排序 + 复制功能 ---")
+    print("--- 服务器运行在 http://127.0.0.1:8000 ---")
+    print("--- 按 CTRL+C 停止 ---")
+    uvicorn.run(app, host="127.0.0.1", port=8000)
